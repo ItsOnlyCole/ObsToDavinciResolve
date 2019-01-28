@@ -12,3 +12,6 @@ ffmpeg -i $originalVideo -map 0:a:0 -f flac $projectName/masterAudio.flac -map 0
 
 #Converts video to format useable by Davinci Resolve
 HandBrakeCLI -i $originalVideo -o $convertedVideo --encoder mpeg4 --vfr --quality 1 --two-pass --turbo --vb 6000
+
+#Moves the original video file to the project folder
+mv $originalVideo $projectName/$originalVideo
