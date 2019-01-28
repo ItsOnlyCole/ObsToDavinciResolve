@@ -1,8 +1,22 @@
 #!/bin/bash
 originalVideo=$1
+renameVideo=$2
+echo $renameVideo
+#if video rename was given, renames the video and accompanying files/folders
+###New Name needs to be newFileName.extension
+###ie: oldFileName.mkv > newFileName.mkv
+if [ -z $renameVideo ]
+then
+  #Do Nothing
+  echo "No Renaming Needed."
+else
+  echo "renaming $originalVideo to $renameVideo"
+  mv $originalVideo $renameVideo
+  originalVideo=$renameVideo
+fi
+
 projectName=${originalVideo::-4}
 convertedVideo="$projectName/$projectName.m4v"
-
 
 #Creates project folder to store everything
 mkdir $projectName
