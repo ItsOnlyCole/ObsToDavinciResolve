@@ -16,16 +16,17 @@ else
 fi
 
 projectName=${originalVideo::-4}
-convertedVideo="$projectName/$projectName.m4v"
+convertedVideo="$projectName.mov"
 
 #Creates project folder to store everything
-mkdir $projectName
+#mkdir $projectName
 
 #Extracts multi-track audio into seperate audio files
-ffmpeg -i $originalVideo -map 0:a:0 -f flac $projectName/masterAudio.flac -map 0:a:1 -f flac $projectName/micAudio.flac -map 0:a:2 -f flac $projectName/voipAudio.flac -map 0:a:3 -f flac $projectName/gameAudio.flac -map 0:a:4 -f flac $projectName/mediaAudio.flac -map 0:a:5 -f flac $projectName/notificationsAudio.flac
+#ffmpeg -i $originalVideo -map 0:a:0 -f flac $originalVideo.flac
 
 #Converts video to format useable by Davinci Resolve
-HandBrakeCLI -i $originalVideo -o $convertedVideo --encoder mpeg4 --vfr --quality 1 --two-pass --turbo --vb 6000
+#HandBrakeCLI -i $originalVideo -o $convertedVideo --encoder mpeg4 --vfr --two-pass --turbo
 
+ffmpeg -i $originalVideo -map 0:0 -map 0:a:0 -map 0:a:1 -map 0:a:2 -map 0:a:3 -map 0:a:4 -vcodec mpeg4 -q:v 2 -acodec pcm_s16be -q:a 0 -f mov $convertedVideo
 #Moves the original video file to the project folder
-mv $originalVideo $projectName/$originalVideo
+#mv $originalVideo $projectName/$originalVideo
